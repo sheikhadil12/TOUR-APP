@@ -198,6 +198,12 @@
         .btn-bottom:hover {
             background: #f1f1f1;
         }
+        :root { --phone-width: 420px; }
+        @media (min-width: 480px) {
+            .main-content { width: var(--phone-width); margin: 0 auto; }
+            .app-header { width: var(--phone-width); left: 50%; transform: translateX(-50%); }
+            .bottom-nav { width: var(--phone-width); left: 50%; transform: translateX(-50%); }
+        }
         .btn-bottom i {
             color: #0d6efd;
         }
@@ -1477,7 +1483,7 @@
             if (!currentUser) return;
             if (!confirm("Clear all notifications?")) return;
             try {
-                await update(ref(db), { [`userNotifications/${currentUser.uid}`]: null });
+                await set(ref(db, `userNotifications/${currentUser.uid}`), null);
                 openNotificationsModal();
             } catch (e) { console.error("Clear notifications failed:", e); }
         }
