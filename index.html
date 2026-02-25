@@ -204,6 +204,11 @@
             .app-header { width: var(--phone-width); left: 50%; transform: translateX(-50%); }
             .bottom-nav { width: var(--phone-width); left: 50%; transform: translateX(-50%); padding-bottom: env(safe-area-inset-bottom, 0px); }
         }
+        :root { --header-height: 60px; --bottom-nav-height: 72px; }
+        body { padding-top: calc(var(--header-height) + env(safe-area-inset-top, 0px)); padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px)); }
+        .app-header { height: var(--header-height); }
+        .bottom-nav { height: var(--bottom-nav-height); border-top: 2px solid var(--border-color); }
+        body::after { content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: env(safe-area-inset-bottom, 0px); background: var(--bottom-nav-bg); z-index: 999; }
         .btn-bottom i {
             color: #0d6efd;
         }
