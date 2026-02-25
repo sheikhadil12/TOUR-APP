@@ -13,11 +13,12 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   const n = payload && payload.notification ? payload.notification : {};
-  const title = n.title || 'Update';
+  const d = payload && payload.data ? payload.data : {};
+  const title = n.title || d.title || 'Update';
   const options = {
-    body: n.body || '',
-    icon: n.icon || undefined,
-    data: payload && payload.data ? payload.data : {}
+    body: n.body || d.body || '',
+    icon: n.icon || d.icon || undefined,
+    data: d
   };
   self.registration.showNotification(title, options);
 });

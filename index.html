@@ -2122,10 +2122,15 @@
                     alert('Notifications enabled');
                 }
                 onMessage(messaging, (payload) => {
-                    const n = payload?.notification || {};
-                    if (n?.title || n?.body) {
-                        try { new Notification(n.title || 'Update', { body: n.body || '', icon: n.icon || undefined }); } catch {}
+                    const n = payload && payload.notification ? payload.notification : {};
+                    const d = payload && payload.data ? payload.data : {};
+                    const title = n.title || d.title;
+                    const body = n.body || d.body;
+                    const icon = n.icon || d.icon;
+                    if (title || body) {
+                        try { new Notification(title || 'Update', { body: body || '', icon: icon || undefined }); } catch {}
                     }
+                    console.log('FCM foreground payload:', payload);
                 });
             } catch (e) { try { alert('Notification setup failed'); } catch {} console.error(e); }
         }
